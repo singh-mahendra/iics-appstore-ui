@@ -1,17 +1,21 @@
 import * as React from "react";
-import { home_icon } from "@informatica/archipelago-icons";
-import { Button, Panel, Toolbar, IconButton, Tabs, Card, HeaderLevelProvider } from "@informatica/droplets-core";
-import axios from "axios";
+import { project_icon } from "@informatica/archipelago-icons";
+import { Shell, Button, Panel, Toolbar, IconButton, Tabs, Card, HeaderLevelProvider } from "@informatica/droplets-core";
 import './ProductPage.css';
 import ReactStars from "react-rating-stars-component";
+import {getProductDetails} from './services/ProductService'
 
-
-const ProductPage = (props) => {
+const ProductPageComponent = ({update}) => {
     const [selectedTab, setSelectedTab] = React.useState("overview");
     const [productData, setProductData] = React.useState({});
     React.useEffect(async () => {
-        const res = await axios.get("http://localhost:3001/products/dde19380-4b0a-48b2-a8f9-beccb61c5673");
+        const res = await getProductDetails("dde19380-4b0a-48b2-a8f9-beccb61c5673");
         setProductData(res.data);
+    }, []);
+
+    React.useEffect(() => {
+        //update({ name: "Products", icon:<i className="aicon aicon__notifications" style={{ fontSize: '16px' }} /> });
+        
     }, []);
     const styles = {
         row: {
@@ -35,7 +39,7 @@ const ProductPage = (props) => {
                 <div className="prod-info">
                     <h1>{productData.name}</h1>
                     <h4>Latest Version: {productData.version}</h4>
-                    <a href={productData.publisher.website}> By: {productData.publisher.name}</a>
+                    {productData.publisher ? (<a href={productData.publisher.website}> By: {productData.publisher.name}</a>) : ""}
                 </div>
             </div>
             <h2>{productData.shortDescription}</h2>
@@ -109,40 +113,36 @@ const ProductPage = (props) => {
     }
 
     return (
-        <Panel
-        title={<Toolbar>
-            <Tabs>
-                <Tabs.Tab onClick={() => setSelectedTab("overview")}>Overview</Tabs.Tab>
-                <Tabs.Tab onClick={() => setSelectedTab("pricing")} >Pricing</Tabs.Tab>
-                <Tabs.Tab onClick={() => setSelectedTab("usage")}>Usage</Tabs.Tab>
-                <Tabs.Tab onClick={() => setSelectedTab("support")}>Support</Tabs.Tab>
-                <Tabs.Tab onClick={() => setSelectedTab("reviews")}>Reviews</Tabs.Tab>
-            </Tabs>
-        </Toolbar>}
-        >
-        <div>
-            {tabData[selectedTab]()}
-        </div>
-    </Panel>
+        <Shell.Page breadcrumbs={["Product"]}
+                        icon={<img src={project_icon} aria-label={`image for product`} alt="Icon"></img>}>
+            <Panel
+            title={<Toolbar>
+                <Tabs>
+                    <Tabs.Tab onClick={() => setSelectedTab("overview")}>Overview</Tabs.Tab>
+                    <Tabs.Tab onClick={() => setSelectedTab("pricing")} >Pricing</Tabs.Tab>
+                    <Tabs.Tab onClick={() => setSelectedTab("usage")}>Usage</Tabs.Tab>
+                    <Tabs.Tab onClick={() => setSelectedTab("support")}>Support</Tabs.Tab>
+                    <Tabs.Tab onClick={() => setSelectedTab("reviews")}>Reviews</Tabs.Tab>
+                </Tabs>
+            </Toolbar>}
+            >
+                <div>
+                    {tabData[selectedTab]()}
+                </div>
+            </Panel>
+        </Shell.Page>
     );
 };
 
 
  
-export default (props) => {
-    return {
+export const ProductPage = {
         id: "productPage",
         meta: {
             nav: {
-                label: "Home",
-                icon: <img src={home_icon} alt="" />
+                icon: <img src={project_icon} alt="Product" />
             }
         },
-        path: "/product",
-        privilege: "*",
-        licenseId: "*",
-        component: ProductPage,
-        preserveState: "children",
-        position: 2,
+        path: "/products/:productId",
+        component: ProductPageComponent
     };
-};

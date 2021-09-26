@@ -4,14 +4,15 @@ import { home_icon } from "@informatica/archipelago-icons";
 import { Button } from "@informatica/droplets-core";
 import '../Home.css';
 import Product from "./Product";
+import {getAllProducts} from './services/ProductService'
 
-function HomePage(props) {
+function HomePageComponent(props) {
   const [originalData, setOriginalData] = useState([]);
   const [data, setData] = useState([]);
 
  
   useEffect(async()=>{
-      const res = await axios.get("http://localhost:8001/appstore/apps")
+      const res = await getAllProducts();
       const apps = res.data;
       setData(apps)
       setOriginalData(apps)
@@ -40,7 +41,7 @@ function HomePage(props) {
           <div className="menu">
             <ul>
               <li>
-                <a href="#">Home</a>
+                <a href="/home">Home</a>
               </li>
             </ul>
           </div>
@@ -64,8 +65,7 @@ function HomePage(props) {
   );
 }
  
-export default (props) => {
-    return {
+export const HomePage = {
         id: "homePage",
         meta: {
             nav: {
@@ -74,10 +74,5 @@ export default (props) => {
             }
         },
         path: "/home",
-        privilege: "*",
-        licenseId: "*",
-        component: HomePage,
-        preserveState: "children",
-        position: 1,
-    };
-};
+        component: HomePageComponent
+    }

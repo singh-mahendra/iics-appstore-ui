@@ -33,11 +33,29 @@
   },
   "devDependencies": {
     "@codeceptjs/configure": "^0.5.0",
-    "@informatica/iics-dev-proxy": "^2.32.15"
+    "@informatica/iics-dev-proxy": "^2.32.15",
+    "customize-cra": "^0.9.1",
+    "html-webpack-deploy-plugin": "^2.0.6",
+    "html-webpack-externals-plugin": "^3.8.0",
+    "@testing-library/dom": "^5.6.1",
+    "@testing-library/jest-dom": "^4.2.3",
+    "@testing-library/react": "^8.0.7",
+    "@testing-library/react-hooks": "^3.1.1",
+    "@types/jest": "^24.0.20",
+    "@babel/preset-typescript": "^7.10.4",
+    "jest": "^24.9.0",
+    "jest-dom": "^3.1.2",
+    "jest-junit": "^6.0.1",
+    "jest-pnp-resolver": "1.0.1",
+    "jest-resolve": "23.6.0",
+    "jest-stare": "^2.0.0",
+    "jest-svg-transformer": "^1.0.0",
+    "jest-transform-css": "^2.0.0",
+    "prettier": "^2.0.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "iics-app-build start --watch-all",
+    "build": "iics-app-build build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

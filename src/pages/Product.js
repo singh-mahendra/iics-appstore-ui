@@ -1,3 +1,4 @@
+import { Shell } from "@informatica/droplets-common";
 import React from "react";
 import ReactStars from "react-rating-stars-component";
 //import { Link, useHistory } from "react-router-dom";
@@ -6,6 +7,7 @@ function Product({ productDetails }) {
   //let history = useHistory();
   const handleClick = () => {
     //history.push("/dashboard");
+    Shell.navigate(`/products/${productDetails.id}`)
   };
   return (
     <div className="container" onClick={handleClick}>
