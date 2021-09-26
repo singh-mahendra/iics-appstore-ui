@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "@informatica/droplets-core/dist/themes/archipelago/archipelago.css";
 import { Shell } from "@informatica/droplets-common";
 
 import { pages } from "./pages/";

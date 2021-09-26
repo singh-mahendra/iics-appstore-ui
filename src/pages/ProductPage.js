@@ -1,22 +1,19 @@
 import * as React from "react";
 import { project_icon } from "@informatica/archipelago-icons";
-import { Shell, Button, Panel, Toolbar, IconButton, Tabs, Card, HeaderLevelProvider } from "@informatica/droplets-core";
+import { Shell, Button, Panel, Toolbar, IconButton, Tabs, Card, HeaderLevelProvider,MessageBubble } from "@informatica/droplets-core";
 import './ProductPage.css';
 import ReactStars from "react-rating-stars-component";
-import {getProductDetails} from './services/ProductService'
+import {getProductDetails, installProduct} from './services/ProductService'
 
-const ProductPageComponent = ({update}) => {
+const ProductPageComponent = ({location}) => {
     const [selectedTab, setSelectedTab] = React.useState("overview");
     const [productData, setProductData] = React.useState({});
+    const [showSuccess, setShowSuccess] = React.useState(false);
     React.useEffect(async () => {
-        const res = await getProductDetails("dde19380-4b0a-48b2-a8f9-beccb61c5673");
+        const res = await getProductDetails(location.state.productId);
         setProductData(res.data);
     }, []);
 
-    React.useEffect(() => {
-        //update({ name: "Products", icon:<i className="aicon aicon__notifications" style={{ fontSize: '16px' }} /> });
-        
-    }, []);
     const styles = {
         row: {
             display: "flex",
@@ -30,7 +27,10 @@ const ProductPageComponent = ({update}) => {
             margin: 0,
         },
     };
-    
+    const onInstallClick = async () => {
+        const res = await installProduct({orgId: ""});
+        showSuccess(true);
+    }
     const tabData = {
         "overview":() => (<div className="overview-container">
             <div className="product-overview">
@@ -49,7 +49,18 @@ const ProductPageComponent = ({update}) => {
         </div>
         <Card>
             <HeaderLevelProvider level={3}>
-                <Card.Header id="title" title="Highlights" />
+                <Card.Header id="title" title="Highlights" >
+                <Toolbar role="list">
+                        <IconButton aria-labelledby="download title" onClick={onInstallClick}>
+                            <i
+                                className="aicon aicon__download"
+                                role="listitem"
+                                aria-label="download"
+                                id="download"
+                            />
+                        </IconButton>
+                        </Toolbar>
+                </Card.Header>
             </HeaderLevelProvider>
             <Card.Body>
                 <div style={styles.row}>
@@ -65,7 +76,8 @@ const ProductPageComponent = ({update}) => {
                     <p style={styles.p}>5</p>
                 </div>
             </Card.Body>
-        </Card></div>),
+        </Card>
+</div>),
         "pricing": () => (<div
             dangerouslySetInnerHTML={{
               __html: productData.pricing
@@ -113,7 +125,7 @@ const ProductPageComponent = ({update}) => {
     }
 
     return (
-        <Shell.Page breadcrumbs={["Product"]}
+        <Shell.Page breadcrumbs={[`${productData.name}`]}
                         icon={<img src={project_icon} aria-label={`image for product`} alt="Icon"></img>}>
             <Panel
             title={<Toolbar>
@@ -127,6 +139,12 @@ const ProductPageComponent = ({update}) => {
             </Toolbar>}
             >
                 <div>
+                { showSuccess ?
+                <div className="relative-container">
+                    <MessageBubble type="success" timeout={10000000} dismissible>
+                        Product Installed Successfully.
+                    </MessageBubble>
+                </div> : ""}
                     {tabData[selectedTab]()}
                 </div>
             </Panel>
