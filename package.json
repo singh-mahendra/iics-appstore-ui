@@ -1,9 +1,11 @@
 {
-  "name": "iics-appstore-ui",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start"
+  },
   "dependencies": {
-    "@informatica/archipelago-icons": "=0.0.4",
+    "@informatica/archipelago-icons": "^0.0.7",
     "@informatica/browserslist-config": "latest",
     "@informatica/droplets-analytics": "34.0.0-beta.5",
     "@informatica/droplets-common": "2021-08",
@@ -16,65 +18,21 @@
     "@informatica/iics-i18n": "2021-08",
     "@informatica/iics-utils": "2021-08",
     "@reach/router": "^1.2.1",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "antlr4ts": "0.5.0-alpha.3",
-    "antlr4ts-cli": "0.5.0-alpha.3",
-    "autoprefixer": "9.8.5",
-    "axios": "0.21.1",
-    "colorette": "1.2.0",
-    "dompurify": "^2.3.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-rating-stars-component": "^2.2.0",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
+    "react-scripts": "3.2.0",
+    "react-rating-stars-component": "^2.2.0"
   },
-  "devDependencies": {
-    "@codeceptjs/configure": "^0.5.0",
-    "@informatica/iics-dev-proxy": "^2.32.15",
-    "customize-cra": "^0.9.1",
-    "html-webpack-deploy-plugin": "^2.0.6",
-    "html-webpack-externals-plugin": "^3.8.0",
-    "@testing-library/dom": "^5.6.1",
-    "@testing-library/jest-dom": "^4.2.3",
-    "@testing-library/react": "^8.0.7",
-    "@testing-library/react-hooks": "^3.1.1",
-    "@types/jest": "^24.0.20",
-    "@babel/preset-typescript": "^7.10.4",
-    "jest": "^24.9.0",
-    "jest-dom": "^3.1.2",
-    "jest-junit": "^6.0.1",
-    "jest-pnp-resolver": "1.0.1",
-    "jest-resolve": "23.6.0",
-    "jest-stare": "^2.0.0",
-    "jest-svg-transformer": "^1.0.0",
-    "jest-transform-css": "^2.0.0",
-    "prettier": "^2.0.5"
-  },
-  "scripts": {
-    "start": "iics-app-build start --watch-all",
-    "build": "iics-app-build build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+  "browserslist": "extends @informatica/browserslist-config",
   "eslintConfig": {
+    "env": {
+      "browser": true
+    },
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "@informatica/eslint-config",
+      "@informatica/eslint-config/react"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "prettier": "@informatica/eslint-config/.prettierrc",
+  "name": "@informatica/iics-app-store"
 }

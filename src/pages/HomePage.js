@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { home_icon } from "@informatica/archipelago-icons";
 import { Button } from "@informatica/droplets-core";
-import '../Home.css';
+import './Home.css';
 import Product from "./Product";
 import {getAllProducts} from './services/ProductService'
 
